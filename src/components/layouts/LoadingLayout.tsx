@@ -1,8 +1,8 @@
-import { useSelector } from "react-redux";
 import { selectLoading } from "@/redux/features/loadingSlice";
+import { useAppSelector } from "@/redux/hook";
 
 const LoadingLayout = () => {
-  const loading = useSelector(selectLoading);
+  const loading = useAppSelector(selectLoading);
 
   if (!loading) return null; // don't render if false
 
