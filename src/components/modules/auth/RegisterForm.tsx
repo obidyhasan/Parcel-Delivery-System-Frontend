@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import registerImg from "@/assets/images/registerImg.jpg";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 
 import {
@@ -28,15 +28,71 @@ import {
 } from "@/components/ui/form";
 import Password from "@/components/ui/Password";
 import Logo from "@/assets/icons/Logo";
+import z from "zod";
+import { useRegisterMutation } from "@/redux/features/auth/auth.api";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { useState } from "react";
+
+const registerSchema = z.object({
+  name: z
+    .string("Name must be string")
+    .min(2, "Name must be at least 2 characters long."),
+  email: z.email({ message: "Invalid email address format." }),
+  password: z
+    .string("Password must be string")
+    .min(8, { message: "Password must be at least 8 characters long." })
+    .regex(/^(?=.*[A-Z])/, {
+      message: "Password must contain at least 1 uppercase letter.",
+    })
+    .regex(/^(?=.*[!@#$%^&*])/, {
+      message: "Password must contain at least 1 special character.",
+    })
+    .regex(/^(?=.*\d)/, {
+      message: "Password must contain at least 1 number",
+    }),
+  role: z.enum(["SENDER", "RECEIVER"], {
+    message: "Please choose from SENDER, or RECEIVER.",
+  }),
+});
 
 export function RegisterForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const form = useForm();
+  const [register] = useRegisterMutation();
+  const navigate = useNavigate();
+  const [buttonDisable, setButtonDisable] = useState(false);
 
-  const onSubmit = (data: any) => {
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      role: undefined,
+      password: "",
+    },
+  });
+
+  const onSubmit = async (data: z.infer<typeof registerSchema>) => {
+    const toastId = toast.loading("Please wait...");
+    setButtonDisable(true);
     console.log(data);
+    try {
+      const res = await register(data).unwrap();
+      console.log(res);
+      if (res.success) {
+        toast.success("Register successfully", { id: toastId });
+        navigate("/login", { replace: true });
+      }
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error.data.message || error.data || "Something went wrong", {
+        id: toastId,
+      });
+    } finally {
+      setButtonDisable(false);
+    }
   };
 
   return (
@@ -63,6 +119,7 @@ export function RegisterForm({
               </div>
               <Form {...form}>
                 <form
+                  id="register-form"
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="space-y-4"
                 >
@@ -108,7 +165,11 @@ export function RegisterForm({
                       <FormItem>
                         <FormLabel>Role</FormLabel>
                         <FormControl>
-                          <Select {...field}>
+                          <Select
+                            defaultValue={field.value}
+                            onValueChange={field.onChange}
+                            {...field}
+                          >
                             <SelectTrigger className="w-full">
                               <SelectValue placeholder="Select a role" />
                             </SelectTrigger>
@@ -149,7 +210,12 @@ export function RegisterForm({
                   />
                 </form>
               </Form>
-              <Button type="submit" className="w-full">
+              <Button
+                disabled={buttonDisable}
+                form="register-form"
+                type="submit"
+                className="w-full"
+              >
                 Register
               </Button>
 

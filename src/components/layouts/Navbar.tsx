@@ -14,6 +14,10 @@ import {
 import { Link } from "react-router";
 import { ModeToggle } from "../ui/mode-toggle";
 import UserMenu from "../ui/user-menu";
+import { useGetMeQuery } from "@/redux/features/User/user.api";
+import { useAppDispatch } from "@/redux/hook";
+import { useEffect } from "react";
+import { setLoading } from "@/redux/features/loadingSlice";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -23,6 +27,12 @@ const navigationLinks = [
 ];
 
 export default function Navbar() {
+  const { data: user = {}, isLoading } = useGetMeQuery(undefined);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(setLoading(isLoading));
+  }, [isLoading, dispatch]);
+
   return (
     <header className="sticky top-0 z-50 bg-background">
       <div className="flex h-16 items-center justify-between gap-4 max-w-7xl mx-auto px-4">
@@ -115,10 +125,13 @@ export default function Navbar() {
         {/* Right side */}
         <div className="flex items-center gap-2">
           <ModeToggle />
-          <UserMenu />
-          <Button asChild size="sm" className="text-sm">
-            <Link to="/login">Login</Link>
-          </Button>
+          {user?.email ? (
+            <UserMenu />
+          ) : (
+            <Button asChild size="sm" className="text-sm">
+              <Link to="/login">Login</Link>
+            </Button>
+          )}
         </div>
       </div>
     </header>
