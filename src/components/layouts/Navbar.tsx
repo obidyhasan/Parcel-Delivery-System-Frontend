@@ -21,9 +21,10 @@ import { setLoading } from "@/redux/features/loadingSlice";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "/", label: "Home", active: true },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/", label: "Home", role: "PUBLIC", active: true },
+  { href: "/about", label: "About", role: "PUBLIC" },
+  { href: "/contact", label: "Contact", role: "PUBLIC" },
+  { href: "/track", label: "Parcel Track", role: "PUBLIC" },
 ];
 
 export default function Navbar() {
@@ -126,7 +127,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <ModeToggle />
           {user?.email ? (
-            <UserMenu />
+            <UserMenu user={user} />
           ) : (
             <Button asChild size="sm" className="text-sm">
               <Link to="/login">Login</Link>

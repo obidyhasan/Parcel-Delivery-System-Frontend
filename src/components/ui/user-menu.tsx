@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { LayoutDashboard, LogOutIcon, UserRound } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -23,17 +23,32 @@ import {
 import { useAppDispatch } from "@/redux/hook";
 import { authApi, useLogoutMutation } from "@/redux/features/auth/auth.api";
 import { useState } from "react";
+import { Link } from "react-router";
+import { role } from "@/constants/role";
 
-export default function UserMenu() {
+export default function UserMenu({ user }: { user: any }) {
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
-
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleLogout = async () => {
     const res = await logout(undefined);
     console.log(res);
     dispatch(authApi.util.resetApiState());
+  };
+
+  // Decide dashboard route based on role
+  const getDashboardLink = () => {
+    switch (user?.role) {
+      case role.ADMIN:
+        return "/admin";
+      case role.SENDER:
+        return "/sender";
+      case role.RECEIVER:
+        return "/receiver";
+      default:
+        return "/"; // fallback
+    }
   };
 
   return (
@@ -51,21 +66,21 @@ export default function UserMenu() {
         <DropdownMenuContent className="max-w-64" align="end">
           <DropdownMenuLabel className="flex min-w-0 flex-col">
             <span className="text-foreground truncate text-sm font-medium">
-              Keith Kennedy
+              {user?.name || "User"}
             </span>
             <span className="text-muted-foreground truncate text-xs font-normal">
-              k.kennedy@originui.com
+              {user?.email}
             </span>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
+
+          {/* ✅ Dashboard link based on role */}
           <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <LayoutDashboard
-                size={16}
-                className="opacity-60"
-                aria-hidden="true"
-              />
-              <span>Dashboard</span>
+            <DropdownMenuItem asChild>
+              <Link to={getDashboardLink()} className="flex items-center gap-2">
+                <LayoutDashboard size={16} className="opacity-60" />
+                <span>Dashboard</span>
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuGroup>
 
@@ -77,7 +92,7 @@ export default function UserMenu() {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* AlertDialog for Logout */}
+      {/* Logout confirm dialog */}
       <AlertDialog open={openDialog} onOpenChange={setOpenDialog}>
         <AlertDialogContent className="w-sm">
           <AlertDialogHeader>
