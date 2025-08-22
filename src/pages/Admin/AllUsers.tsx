@@ -1,7 +1,9 @@
+import { AllUsersTable } from "@/components/modules/Admin/AllUsersTable";
+
 const AllUsers = () => {
   return (
     <div>
-      <h1>This is AllUsers component</h1>
+      <AllUsersTable />
     </div>
   );
 };

@@ -71,8 +71,6 @@ export function AllParcelTable() {
       toast.error(error.data.message || error.data || "Something went wrong", {
         id: toastId,
       });
-    } finally {
-      dispatch(parcelApi.util.resetApiState());
     }
   };
 
