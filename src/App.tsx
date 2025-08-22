@@ -1,10 +1,17 @@
-import { Button } from "@/components/ui/button";
+import CommonLayout from "./components/layouts/CommonLayout";
+import { Outlet } from "react-router";
+import ScrollToTop from "./utils/scrollToTop";
+import LoadingLayout from "./components/layouts/LoadingLayout";
 
 function App() {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      <Button>Click me</Button>
-    </div>
+    <>
+      <CommonLayout>
+        <ScrollToTop />
+        <Outlet />
+      </CommonLayout>
+      <LoadingLayout />
+    </>
   );
 }
 
