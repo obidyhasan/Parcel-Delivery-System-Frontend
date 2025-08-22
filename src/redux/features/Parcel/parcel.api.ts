@@ -38,6 +38,7 @@ export const parcelApi = baseApi.injectEndpoints({
         url: `/parcel/track/${trackingId}`,
         method: "GET",
       }),
+      transformResponse: (response) => response.data,
     }),
     inComingParcel: builder.query({
       query: () => ({
