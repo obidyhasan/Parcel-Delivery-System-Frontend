@@ -75,6 +75,7 @@ export const parcelApi = baseApi.injectEndpoints({
         method: "GET",
       }),
       providesTags: ["PARCEL"],
+      transformResponse: (response) => response.data,
     }),
     updateParcelRequestByAdmin: builder.mutation({
       query: ({ parcelInfo, id }) => ({

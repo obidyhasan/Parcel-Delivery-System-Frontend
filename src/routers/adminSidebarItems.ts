@@ -1,5 +1,5 @@
+import AllParcels from "@/pages/Admin/AllParcels";
 import AllUsers from "@/pages/Admin/AllUsers";
-import AllParcel from "@/pages/Sender/AllParcel";
 import type { ISidebarItem } from "@/types";
 
 export const adminSidebarItems: ISidebarItem[] = [
@@ -14,7 +14,7 @@ export const adminSidebarItems: ISidebarItem[] = [
       {
         title: "Parcels",
         url: "/admin/parcels",
-        component: AllParcel,
+        component: AllParcels,
       },
     ],
   },

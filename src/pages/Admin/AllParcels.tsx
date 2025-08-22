@@ -1,7 +1,9 @@
+import { AllParcelsTableAdmin } from "@/components/modules/Admin/AllParcelsTableAdmin";
+
 const AllParcels = () => {
   return (
     <div>
-      <h1>This is AllParcels component</h1>
+      <AllParcelsTableAdmin />
     </div>
   );
 };
