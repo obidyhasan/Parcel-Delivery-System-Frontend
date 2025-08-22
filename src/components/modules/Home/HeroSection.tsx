@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import deliveryImg from "@/assets/images/parcel-delivery-img.jpg";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
 
 const HomeSection = () => {
   return (
@@ -26,8 +27,12 @@ const HomeSection = () => {
             </p>
             <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
               <Button>
-                Deliver your parcel
-                <ArrowRight className="size-4" />
+                <Link to={"/about"}>
+                  <div className="flex gap-2 items-center justify-center">
+                    Explore Us
+                    <ArrowRight className="size-4" />
+                  </div>
+                </Link>
               </Button>
             </div>
           </div>
