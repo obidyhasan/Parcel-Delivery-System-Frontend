@@ -4,16 +4,18 @@ export const parcelApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     parcelRequest: builder.mutation({
       query: (parcelInfo) => ({
-        url: "/parcel/create",
+        url: "/parcel/request",
         method: "POST",
         data: parcelInfo,
       }),
+      invalidatesTags: ["PARCEL"],
     }),
     getParcelRequest: builder.query({
       query: () => ({
         url: "/parcel/me",
         method: "GET",
       }),
+      providesTags: ["PARCEL"],
       transformResponse: (response) => response.data,
     }),
     updateParcel: builder.mutation({
@@ -22,12 +24,14 @@ export const parcelApi = baseApi.injectEndpoints({
         method: "PATCH",
         data: parcelInfo,
       }),
+      invalidatesTags: ["PARCEL"],
     }),
     parcelCancel: builder.mutation({
       query: (id) => ({
         url: `/parcel/${id}/cancel`,
         method: "PATCH",
       }),
+      invalidatesTags: ["PARCEL"],
     }),
     parcelTrack: builder.query({
       query: (trackingId) => ({
@@ -40,30 +44,35 @@ export const parcelApi = baseApi.injectEndpoints({
         url: `/parcel/incoming`,
         method: "GET",
       }),
+      providesTags: ["PARCEL"],
     }),
     confirmParcel: builder.mutation({
       query: (id) => ({
         url: `/parcel/${id}/confirm`,
         method: "PATCH",
       }),
+      invalidatesTags: ["PARCEL"],
     }),
     getDeliveryParcel: builder.query({
       query: () => ({
         url: `/parcel/delivery`,
         method: "GET",
       }),
+      providesTags: ["PARCEL"],
     }),
     setParcelDeliveryRequest: builder.mutation({
       query: (id) => ({
         url: `/parcel/${id}/delivered`,
         method: "PATCH",
       }),
+      invalidatesTags: ["PARCEL"],
     }),
     getAllParcel: builder.query({
       query: () => ({
         url: `/parcel`,
         method: "GET",
       }),
+      providesTags: ["PARCEL"],
     }),
     updateParcelRequestByAdmin: builder.mutation({
       query: ({ parcelInfo, id }) => ({
@@ -71,6 +80,7 @@ export const parcelApi = baseApi.injectEndpoints({
         method: "PATCH",
         data: parcelInfo,
       }),
+      invalidatesTags: ["PARCEL"],
     }),
     deleteParcelRequestByAdmin: builder.mutation({
       query: ({ parcelInfo, id }) => ({
@@ -78,6 +88,7 @@ export const parcelApi = baseApi.injectEndpoints({
         method: "DELETe",
         data: parcelInfo,
       }),
+      invalidatesTags: ["PARCEL"],
     }),
   }),
 });
