@@ -45,6 +45,7 @@ export const parcelApi = baseApi.injectEndpoints({
         method: "GET",
       }),
       providesTags: ["PARCEL"],
+      transformResponse: (response) => response.data,
     }),
     confirmParcel: builder.mutation({
       query: (id) => ({

@@ -1,7 +1,9 @@
+import { AllIncomingParcelTable } from "@/components/modules/Receiver/AllIncomingParcelTable";
+
 const IncomingParcels = () => {
   return (
     <div>
-      <h1>This is IncomingParcels component</h1>
+      <AllIncomingParcelTable />
     </div>
   );
 };

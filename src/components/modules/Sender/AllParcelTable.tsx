@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { setLoading } from "@/redux/features/loadingSlice";
 import {
+  parcelApi,
   useGetParcelRequestQuery,
   useParcelCancelMutation,
   useUpdateParcelMutation,
@@ -70,6 +71,8 @@ export function AllParcelTable() {
       toast.error(error.data.message || error.data || "Something went wrong", {
         id: toastId,
       });
+    } finally {
+      dispatch(parcelApi.util.resetApiState());
     }
   };
 
@@ -79,6 +82,7 @@ export function AllParcelTable() {
       const res = await parcelCancel(selectedDeleteId).unwrap();
       if (res.success) {
         toast.success("Parcel cancel successfully", { id: toastId });
+        dispatch(parcelApi.util.resetApiState());
       }
     } catch (error: any) {
       console.error(error);

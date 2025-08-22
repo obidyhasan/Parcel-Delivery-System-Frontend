@@ -56,8 +56,12 @@ export function LoginForm({
 
       if (res.success) {
         toast.success("Login successfully", { id: toastId });
-        const path = (res?.data?.user?.role as string) || "";
-        navigate(`/${path.toLowerCase()}`, { replace: true });
+
+        if (res?.data?.user?.role) {
+          const getRole = res?.data?.user?.role as string;
+          const path = getRole.toLowerCase();
+          navigate(`/${path}`, { replace: true });
+        }
       }
     } catch (error: any) {
       console.error(error);
