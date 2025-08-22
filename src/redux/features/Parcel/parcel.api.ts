@@ -60,6 +60,7 @@ export const parcelApi = baseApi.injectEndpoints({
         method: "GET",
       }),
       providesTags: ["PARCEL"],
+      transformResponse: (response) => response.data,
     }),
     setParcelDeliveryRequest: builder.mutation({
       query: (id) => ({
