@@ -14,6 +14,7 @@ export const parcelApi = baseApi.injectEndpoints({
         url: "/parcel/me",
         method: "GET",
       }),
+      transformResponse: (response) => response.data,
     }),
     updateParcel: builder.mutation({
       query: ({ parcelInfo, id }) => ({

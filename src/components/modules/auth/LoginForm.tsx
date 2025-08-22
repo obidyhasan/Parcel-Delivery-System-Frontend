@@ -53,10 +53,11 @@ export function LoginForm({
     console.log(data);
     try {
       const res = await login(data).unwrap();
-      console.log(res);
+
       if (res.success) {
         toast.success("Login successfully", { id: toastId });
-        navigate("/", { replace: true });
+        const path = (res?.data?.user?.role as string) || "";
+        navigate(`/${path.toLowerCase()}`, { replace: true });
       }
     } catch (error: any) {
       console.error(error);

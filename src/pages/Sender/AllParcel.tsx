@@ -1,7 +1,9 @@
+import { AllParcelTable } from "@/components/modules/Sender/AllParcelTable";
+
 const AllParcel = () => {
   return (
     <div>
-      <h1>This is AllParcel component</h1>
+      <AllParcelTable />
     </div>
   );
 };

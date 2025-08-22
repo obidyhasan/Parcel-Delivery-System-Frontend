@@ -12,7 +12,7 @@ export const adminSidebarItems: ISidebarItem[] = [
         component: AllUsers,
       },
       {
-        title: "Users",
+        title: "Parcels",
         url: "/admin/parcels",
         component: AllParcel,
       },
