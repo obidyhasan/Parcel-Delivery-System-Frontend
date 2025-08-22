@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import Password from "@/components/ui/Password";
 import Logo from "@/assets/icons/Logo";
 import loginImg from "@/assets/images/register-image.jpg";
@@ -50,18 +50,12 @@ export function LoginForm({
   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
     const toastId = toast.loading("Please wait...");
     setButtonDisable(true);
-    console.log(data);
     try {
       const res = await login(data).unwrap();
 
       if (res.success) {
+        navigate(`/`, { replace: true });
         toast.success("Login successfully", { id: toastId });
-
-        if (res?.data?.user?.role) {
-          const getRole = res?.data?.user?.role as string;
-          const path = getRole.toLowerCase();
-          navigate(`/${path}`, { replace: true });
-        }
       }
     } catch (error: any) {
       console.error(error);

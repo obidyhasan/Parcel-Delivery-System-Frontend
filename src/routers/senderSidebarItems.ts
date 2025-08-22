@@ -1,6 +1,8 @@
-import AllParcel from "@/pages/Sender/AllParcel";
-import CreateParcel from "@/pages/Sender/CreateParcel";
 import type { ISidebarItem } from "@/types";
+import { lazy } from "react";
+
+const AllParcel = lazy(() => import("@/pages/Sender/AllParcel"));
+const CreateParcel = lazy(() => import("@/pages/Sender/CreateParcel"));
 
 export const senderSidebarItems: ISidebarItem[] = [
   {

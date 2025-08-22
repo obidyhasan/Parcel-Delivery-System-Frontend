@@ -59,7 +59,9 @@ const ParcelDeliveryCard = ({ parcel }: any) => {
                     : ""}
                 </TimelineDate>
 
-                <TimelineTitle>{item.status}</TimelineTitle>
+                <TimelineTitle className="font-semibold">
+                  {item.status}
+                </TimelineTitle>
 
                 <TimelineIndicator className="group-data-completed/timeline-item:bg-primary group-data-completed/timeline-item:text-primary-foreground flex size-6 items-center justify-center group-data-completed/timeline-item:border-none group-data-[orientation=vertical]/timeline:-left-7">
                   <CheckIcon
@@ -69,6 +71,10 @@ const ParcelDeliveryCard = ({ parcel }: any) => {
                 </TimelineIndicator>
               </TimelineHeader>
 
+              <TimelineContent className="text-xs">
+                Update by:{" "}
+                <span className="text-black ">{item?.updateBy?.name}</span>
+              </TimelineContent>
               <TimelineContent>{item.note}</TimelineContent>
             </TimelineItem>
           );

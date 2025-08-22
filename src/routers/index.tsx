@@ -1,13 +1,4 @@
-import App from "@/App";
-import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { role } from "@/constants/role";
-import About from "@/pages/About/About";
-import Login from "@/pages/Auth/Login";
-import Register from "@/pages/Auth/Register";
-import Contact from "@/pages/Contact/Contact";
-import Home from "@/pages/Home/Home";
-import ParcelTrack from "@/pages/ParcelTrack/ParcelTrack";
-import Unauthorized from "@/pages/Unauthorized/Unauthorized";
 import type { TRole } from "@/types";
 import { generateRouters } from "@/utils/generateRouters";
 import { withAuth } from "@/utils/withAuth";
@@ -15,6 +6,19 @@ import { createBrowserRouter, Navigate } from "react-router";
 import { adminSidebarItems } from "./adminSidebarItems";
 import { senderSidebarItems } from "./senderSidebarItems";
 import { receiverSidebarItems } from "./receiverSiderbarItems";
+import { lazy } from "react";
+
+const App = lazy(() => import("@/App"));
+const Home = lazy(() => import("@/pages/Home/Home"));
+const About = lazy(() => import("@/pages/About/About"));
+const Login = lazy(() => import("@/pages/Auth/Login"));
+const Register = lazy(() => import("@/pages/Auth/Register"));
+const Contact = lazy(() => import("@/pages/Contact/Contact"));
+const ParcelTrack = lazy(() => import("@/pages/ParcelTrack/ParcelTrack"));
+const Unauthorized = lazy(() => import("@/pages/Unauthorized/Unauthorized"));
+const DashboardLayout = lazy(
+  () => import("@/components/layouts/DashboardLayout")
+);
 
 export const router = createBrowserRouter([
   {
