@@ -20,6 +20,7 @@ import { useAppDispatch } from "@/redux/hook";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router";
 
 export function AllIncomingParcelTable() {
   const { data: parcels = [], isLoading } = useInComingParcelQuery(undefined);
@@ -106,7 +107,10 @@ export function AllIncomingParcelTable() {
 
               <TableCell className="text-right flex flex-wrap gap-2 justify-end">
                 {parcel?.currentStatus === "Pending" && (
-                  <Button onClick={() => handleParcelConfirm(parcel?._id)}>
+                  <Button
+                    size={"sm"}
+                    onClick={() => handleParcelConfirm(parcel?._id)}
+                  >
                     Confirm
                   </Button>
                 )}
@@ -114,12 +118,18 @@ export function AllIncomingParcelTable() {
                   parcel?.currentStatus !== "Canceled" &&
                   parcel?.currentStatus !== "Delivered" && (
                     <Button
+                      size={"sm"}
                       onClick={() => handleParcelDelivered(parcel?._id)}
                       disabled={parcel?.currentStatus !== "In Transit"}
                     >
                       Delivered
                     </Button>
                   )}
+                <Button asChild size={"sm"}>
+                  <Link to={`/receiver/parcel/${parcel?.trackingId}`}>
+                    View
+                  </Link>
+                </Button>
               </TableCell>
             </TableRow>
           ))}

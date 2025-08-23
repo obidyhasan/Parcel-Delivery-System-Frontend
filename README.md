@@ -66,8 +66,8 @@ VITE_API_BASE_URL=https://parcel-delivery-system-backend.vercel.app
 
 ## **Live Demo**
 
-- Frontend: [Frontend URL](https://your-frontend-url.com)
-- Backend: [Backend URL](https://parcel-delivery-system-backend.vercel.app/)
+- Frontend: [Frontend URL](https://parcel-delivery-system-frontend.vercel.app)
+- Backend: [Backend URL](https://parcel-delivery-system-backend.vercel.app)
 
 ## **Features**
 

@@ -22,43 +22,38 @@ const TeamSection = ({
       id: "member-1",
       name: "Sarah Chen",
       role: "CEO & Founder",
-      avatar:
-        "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-1.webp",
+      avatar: "https://i.ibb.co.com/k6nzzrC/phiron-pic.jpg",
     },
     {
       id: "member-2",
       name: "Marcus Rodriguez",
       role: "CTO",
       avatar:
-        "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-2.webp",
+        "https://i.ibb.co.com/n0F1hzK/family-therapy-psychologist-office.jpg",
     },
     {
       id: "member-3",
       name: "Emily Watson",
       role: "Head of Design",
-      avatar:
-        "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-3.webp",
+      avatar: "https://i.ibb.co.com/vx7v6sF9/1696.jpg",
     },
     {
       id: "member-4",
       name: "David Kim",
       role: "Lead Engineer",
-      avatar:
-        "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-4.webp",
+      avatar: "https://i.ibb.co.com/ZzDDz94J/17517.jpg",
     },
     {
       id: "member-5",
       name: "Lisa Thompson",
       role: "Product Manager",
-      avatar:
-        "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-5.webp",
+      avatar: "https://i.ibb.co.com/Vp3zDw0F/1121.jpg",
     },
     {
       id: "member-6",
       name: "Alex Johnson",
       role: "UX Designer",
-      avatar:
-        "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-6.webp",
+      avatar: "https://i.ibb.co.com/hJsxd60H/4110.jpg",
     },
   ],
 }: Team1Props) => {
@@ -76,7 +71,7 @@ const TeamSection = ({
         {members.map((member) => (
           <div key={member.id} className="flex flex-col items-center">
             <Avatar className="mb-4 size-20 border md:mb-5 lg:size-24">
-              <AvatarImage src={member.avatar} />
+              <AvatarImage src={member.avatar} className="object-cover" />
               <AvatarFallback>{member.name}</AvatarFallback>
             </Avatar>
             <p className="text-center font-medium">{member.name}</p>
