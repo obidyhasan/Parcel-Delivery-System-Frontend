@@ -7,7 +7,6 @@ import { adminSidebarItems } from "./adminSidebarItems";
 import { senderSidebarItems } from "./senderSidebarItems";
 import { receiverSidebarItems } from "./receiverSiderbarItems";
 import { lazy } from "react";
-import ParcelDetails from "@/pages/Parcel/ParcelDetails";
 
 const App = lazy(() => import("@/App"));
 const Home = lazy(() => import("@/pages/Home/Home"));
@@ -17,6 +16,7 @@ const Register = lazy(() => import("@/pages/Auth/Register"));
 const Contact = lazy(() => import("@/pages/Contact/Contact"));
 const ParcelTrack = lazy(() => import("@/pages/ParcelTrack/ParcelTrack"));
 const Unauthorized = lazy(() => import("@/pages/Unauthorized/Unauthorized"));
+const ParcelDetails = lazy(() => import("@/pages/Parcel/ParcelDetails"));
 const DashboardLayout = lazy(
   () => import("@/components/layouts/DashboardLayout")
 );
