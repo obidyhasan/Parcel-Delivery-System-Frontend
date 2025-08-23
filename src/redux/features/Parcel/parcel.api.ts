@@ -11,9 +11,10 @@ export const parcelApi = baseApi.injectEndpoints({
       invalidatesTags: ["PARCEL"],
     }),
     getParcelRequest: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: "/parcel/me",
         method: "GET",
+        params,
       }),
       providesTags: ["PARCEL"],
       transformResponse: (response) => response.data,
@@ -71,9 +72,10 @@ export const parcelApi = baseApi.injectEndpoints({
       invalidatesTags: ["PARCEL"],
     }),
     getAllParcel: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: `/parcel`,
         method: "GET",
+        params,
       }),
       providesTags: ["PARCEL"],
       transformResponse: (response) => response.data,

@@ -50,8 +50,6 @@ const ParcelTrack = () => {
     dispatch(setLoading(isLoading));
   }, [isLoading, dispatch]);
 
-  console.log(parcel);
-
   const onSubmit = (data: z.infer<typeof trackingSchema>) => {
     setTrackingId(data.trackingId);
   };

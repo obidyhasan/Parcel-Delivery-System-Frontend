@@ -14,8 +14,6 @@ const DeliveryHistory = () => {
     dispatch(setLoading(isLoading));
   }, [isLoading, dispatch]);
 
-  console.log(parcels);
-
   return (
     <div>
       <div>

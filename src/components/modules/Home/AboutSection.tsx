@@ -157,7 +157,7 @@ const AboutSection = ({
               {achievementsDescription}
             </p>
           </div>
-          <div className="mt-10 flex flex-wrap justify-between gap-10 text-center">
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 text-center">
             {achievements.map((item, idx) => (
               <div className="flex flex-col gap-4" key={item.label + idx}>
                 <p>{item.label}</p>

@@ -54,7 +54,7 @@ export function LoginForm({
       const res = await login(data).unwrap();
 
       if (res.success) {
-        navigate(`/`, { replace: true });
+        navigate(`/`, { state: "login", replace: true });
         toast.success("Login successfully", { id: toastId });
       }
     } catch (error: any) {

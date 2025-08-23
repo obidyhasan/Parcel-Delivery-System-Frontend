@@ -16,6 +16,8 @@ const Register = lazy(() => import("@/pages/Auth/Register"));
 const Contact = lazy(() => import("@/pages/Contact/Contact"));
 const ParcelTrack = lazy(() => import("@/pages/ParcelTrack/ParcelTrack"));
 const Unauthorized = lazy(() => import("@/pages/Unauthorized/Unauthorized"));
+const ParcelDetails = lazy(() => import("@/pages/Parcel/ParcelDetails"));
+const NotFound = lazy(() => import("@/pages/NotFound/NotFound"));
 const DashboardLayout = lazy(
   () => import("@/components/layouts/DashboardLayout")
 );
@@ -49,9 +51,13 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to={"/admin/users"} />,
+        element: <Navigate to={"/admin/analytics"} />,
       },
       ...generateRouters(adminSidebarItems),
+      {
+        Component: ParcelDetails,
+        path: "/admin/parcel/:trackingId",
+      },
     ],
   },
   {
@@ -63,6 +69,10 @@ export const router = createBrowserRouter([
         element: <Navigate to={"/sender/parcels"} />,
       },
       ...generateRouters(senderSidebarItems),
+      {
+        Component: ParcelDetails,
+        path: "/sender/parcel/:trackingId",
+      },
     ],
   },
   {
@@ -74,6 +84,10 @@ export const router = createBrowserRouter([
         element: <Navigate to={"/receiver/incoming-parcel"} />,
       },
       ...generateRouters(receiverSidebarItems),
+      {
+        Component: ParcelDetails,
+        path: "/receiver/parcel/:trackingId",
+      },
     ],
   },
   {
@@ -87,5 +101,9 @@ export const router = createBrowserRouter([
   {
     Component: Unauthorized,
     path: "/unauthorized",
+  },
+  {
+    path: "*",
+    Component: NotFound,
   },
 ]);

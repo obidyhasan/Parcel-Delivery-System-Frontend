@@ -1,9 +1,29 @@
 import { ArrowRight } from "lucide-react";
 import deliveryImg from "@/assets/images/parcel-delivery-img.jpg";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
+import { useEffect } from "react";
+import { useGetMeQuery } from "@/redux/features/User/user.api";
+import { useAppDispatch } from "@/redux/hook";
+import { setLoading } from "@/redux/features/loadingSlice";
 
 const HomeSection = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const location = useLocation();
+
+  const { data: user = {}, isLoading } = useGetMeQuery(undefined);
+
+  useEffect(() => {
+    dispatch(setLoading(isLoading));
+  }, [isLoading, dispatch]);
+
+  useEffect(() => {
+    if (!isLoading && user?.role && location.state === "login") {
+      navigate(`/${user.role}`, { replace: true, state: null });
+    }
+  }, [isLoading, user, navigate, location]);
+
   return (
     <section>
       <div className="bg-muted ">

@@ -27,13 +27,13 @@ import { Link } from "react-router";
 import { role } from "@/constants/role";
 
 export default function UserMenu({ user }: { user: any }) {
+  const [open, setOpen] = useState(false);
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleLogout = async () => {
-    const res = await logout(undefined);
-    console.log(res);
+    await logout(undefined);
     dispatch(authApi.util.resetApiState());
   };
 
@@ -47,13 +47,13 @@ export default function UserMenu({ user }: { user: any }) {
       case role.RECEIVER:
         return "/receiver";
       default:
-        return "/"; // fallback
+        return "/";
     }
   };
 
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
@@ -74,9 +74,8 @@ export default function UserMenu({ user }: { user: any }) {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
 
-          {/* ✅ Dashboard link based on role */}
           <DropdownMenuGroup>
-            <DropdownMenuItem asChild>
+            <DropdownMenuItem asChild onClick={() => setOpen(false)}>
               <Link to={getDashboardLink()} className="flex items-center gap-2">
                 <LayoutDashboard size={16} className="opacity-60" />
                 <span>Dashboard</span>
@@ -85,7 +84,12 @@ export default function UserMenu({ user }: { user: any }) {
           </DropdownMenuGroup>
 
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => setOpenDialog(true)}>
+          <DropdownMenuItem
+            onClick={() => {
+              setOpen(false);
+              setOpenDialog(true);
+            }}
+          >
             <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
             <span>Logout</span>
           </DropdownMenuItem>

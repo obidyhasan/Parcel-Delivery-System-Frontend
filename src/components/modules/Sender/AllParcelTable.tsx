@@ -18,6 +18,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -38,14 +46,41 @@ import { useAppDispatch } from "@/redux/hook";
 import { useEffect, useState } from "react";
 import StatusUpdateAlertDialog from "./StatusUpdateAlertDialog";
 import { toast } from "sonner";
+import { ViewStatusLogsDialog } from "./ViewStatusLogsDialog";
+import { Link, useSearchParams } from "react-router";
+import { Input } from "@/components/ui/input";
+import { SearchIcon } from "lucide-react";
+import ParcelFilters from "../Parcels/ParcelFilters";
 
 export function AllParcelTable() {
-  const { data: parcels = [], isLoading } = useGetParcelRequestQuery(undefined);
+  // Filter
+  const [searchParams] = useSearchParams();
+  const status = searchParams.get("status") || undefined;
+
+  // search
+  const [searchTitle, setSearchTitle] = useState("");
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit] = useState(5);
+
+  const { data, isLoading } = useGetParcelRequestQuery({
+    searchTerm: searchTitle,
+    currentStatus: status,
+    page: currentPage,
+    limit,
+  });
+  const parcels = data?.data || [];
   const [updateParcel] = useUpdateParcelMutation();
   const [parcelCancel] = useParcelCancelMutation();
 
   const [openDeleteDialog, setDeleteOpenDialog] = useState(false);
   const [selectedDeleteId, setSelectedDeleteId] = useState<string | null>(null);
+
+  const [openViewStatusDialog, setOpenViewStatusDialog] = useState(false);
+  const [selectedTrackingId, setSelectedTrackingId] = useState<string | null>(
+    null
+  );
 
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
@@ -90,15 +125,28 @@ export function AllParcelTable() {
     }
   };
 
+  const totalPage = data?.meta?.totalPage || 1;
+
   return (
     <>
-      <div>
-        <h1
-          className="text-lg font-bold mb-4
-        "
-        >
-          Parcels
-        </h1>
+      <div className="flex items-center justify-between gap-2 my-2 pb-5">
+        <h1 className="text-lg font-bold mb-4">Parcels</h1>
+        <div className="flex gap-2 items-center flex-wrap">
+          <div className="*:not-first:mt-2">
+            <div className="relative">
+              <Input
+                onChange={(e) => setSearchTitle(e.target.value)}
+                className="peer ps-9  max-w-44"
+                placeholder="Title, TrackingId"
+                type="search"
+              />
+              <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
+                <SearchIcon size={16} />
+              </div>
+            </div>
+          </div>
+          <ParcelFilters />
+        </div>
       </div>
       <Table>
         <TableHeader>
@@ -156,21 +204,78 @@ export function AllParcelTable() {
                 </div>
               </TableCell>
 
-              <TableCell className="text-right">
+              <TableCell className="text-right flex gap-2 justify-end">
                 <Button
                   onClick={() => {
-                    setSelectedDeleteId(parcel?._id);
-                    setDeleteOpenDialog(true);
+                    setSelectedTrackingId(parcel?.trackingId);
+                    setOpenViewStatusDialog(true);
                   }}
+                  variant={"outline"}
                   size={"sm"}
                 >
-                  Cancel
+                  Status Logs
                 </Button>
+                <Button asChild size={"sm"}>
+                  <Link to={`/sender/parcel/${parcel?.trackingId}`}>View</Link>
+                </Button>
+
+                {parcel?.currentStatus !== "Cancelled" && (
+                  <Button
+                    onClick={() => {
+                      setSelectedDeleteId(parcel?._id);
+                      setDeleteOpenDialog(true);
+                    }}
+                    size={"sm"}
+                  >
+                    Cancel
+                  </Button>
+                )}
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+
+      <div className="flex justify-end my-8">
+        <div>
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  onClick={() => setCurrentPage((prev) => prev - 1)}
+                  className={
+                    currentPage === 1
+                      ? "pointer-events-none opacity-50"
+                      : "cursor-pointer"
+                  }
+                />
+              </PaginationItem>
+              {Array.from({ length: totalPage }, (_, index) => index + 1).map(
+                (page) => (
+                  <PaginationItem
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    <PaginationLink isActive={currentPage === page}>
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                )
+              )}
+              <PaginationItem>
+                <PaginationNext
+                  onClick={() => setCurrentPage((prev) => prev + 1)}
+                  className={
+                    currentPage === totalPage
+                      ? "pointer-events-none opacity-50"
+                      : "cursor-pointer"
+                  }
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      </div>
 
       {/* Logout confirm dialog */}
       <AlertDialog open={openDeleteDialog} onOpenChange={setDeleteOpenDialog}>
@@ -202,6 +307,11 @@ export function AllParcelTable() {
         selectedId={selectedId}
         onConfirm={handleStatusUpdate}
         title={"Confirm Status Update"}
+      />
+      <ViewStatusLogsDialog
+        openDialog={openViewStatusDialog}
+        setOpenDialog={setOpenViewStatusDialog}
+        trackingId={selectedTrackingId}
       />
     </>
   );
