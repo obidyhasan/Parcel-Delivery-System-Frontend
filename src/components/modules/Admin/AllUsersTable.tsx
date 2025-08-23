@@ -8,6 +8,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import {
   Select,
   SelectContent,
   SelectGroup,
@@ -27,9 +35,24 @@ import {
 } from "@/redux/features/User/user.api";
 import StatusUpdateAlertDialog from "../Sender/StatusUpdateAlertDialog";
 import { toast } from "sonner";
+import UsersFilters from "../User/UserFilters";
+import { useSearchParams } from "react-router";
 
 export function AllUsersTable() {
-  const { data: users = [], isLoading } = useGetAllUsersQuery(undefined);
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [limit] = useState(5);
+
+  // Filter
+  const [searchParams] = useSearchParams();
+  const role = searchParams.get("role") || undefined;
+
+  const { data, isLoading } = useGetAllUsersQuery({
+    role,
+    page: currentPage,
+    limit,
+  });
+  const users = data?.data || [];
   const [userUpdate] = useUserUpdateMutation();
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -59,10 +82,13 @@ export function AllUsersTable() {
     }
   };
 
+  const totalPage = data?.meta?.totalPage || 1;
+
   return (
     <>
-      <div>
-        <h1 className="text-lg font-bold mb-4">Users</h1>
+      <div className="flex items-center justify-between gap-2 my-2 pb-5">
+        <h1 className="text-lg font-bold mb-4">Parcels</h1>
+        <UsersFilters />
       </div>
       <Table>
         <TableHeader>
@@ -110,6 +136,48 @@ export function AllUsersTable() {
           ))}
         </TableBody>
       </Table>
+
+      <div className="flex justify-end my-8">
+        <div>
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  onClick={() => setCurrentPage((prev) => prev - 1)}
+                  className={
+                    currentPage === 1
+                      ? "pointer-events-none opacity-50"
+                      : "cursor-pointer"
+                  }
+                />
+              </PaginationItem>
+              {Array.from({ length: totalPage }, (_, index) => index + 1).map(
+                (page) => (
+                  <PaginationItem
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    <PaginationLink isActive={currentPage === page}>
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                )
+              )}
+              <PaginationItem>
+                <PaginationNext
+                  onClick={() => setCurrentPage((prev) => prev + 1)}
+                  className={
+                    currentPage === totalPage
+                      ? "pointer-events-none opacity-50"
+                      : "cursor-pointer"
+                  }
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      </div>
+
       <StatusUpdateAlertDialog
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}

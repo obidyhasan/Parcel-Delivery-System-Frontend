@@ -11,9 +11,10 @@ export const userApi = baseApi.injectEndpoints({
       transformResponse: (response) => response.data,
     }),
     getAllUsers: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: "/user",
         method: "GET",
+        params,
       }),
       providesTags: ["USER"],
       transformResponse: (response) => response.data,

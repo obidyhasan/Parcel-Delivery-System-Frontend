@@ -35,7 +35,7 @@ import { useAppDispatch } from "@/redux/hook";
 import { useEffect, useState } from "react";
 import StatusUpdateAlertDialog from "../Sender/StatusUpdateAlertDialog";
 import { toast } from "sonner";
-import ParcelFilters from "@/components/Parcels/ParcelFilters";
+import ParcelFilters from "@/components/modules/Parcels/ParcelFilters";
 import { Link, useSearchParams } from "react-router";
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
@@ -107,8 +107,6 @@ export function AllParcelsTableAdmin() {
       });
     }
   };
-
-  console.log(data);
 
   const totalPage = data?.meta?.totalPage || 1;
 
