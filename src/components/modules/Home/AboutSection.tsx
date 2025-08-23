@@ -35,33 +35,6 @@ interface About3Props {
   }>;
 }
 
-const defaultCompanies = [
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-1.svg",
-    alt: "Arc",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-2.svg",
-    alt: "Descript",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-3.svg",
-    alt: "Mercury",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-4.svg",
-    alt: "Ramp",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-5.svg",
-    alt: "Retool",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-6.svg",
-    alt: "Watershed",
-  },
-];
-
 const defaultAchievements = [
   { label: "Parcels Delivered", value: "10,000+" },
   { label: "Active Users", value: "2,500+" },
@@ -89,8 +62,6 @@ const AboutSection = ({
     buttonText: "Learn More",
     buttonUrl: "#services",
   },
-  companiesTitle = "Trusted by Customers Across the Country",
-  companies = defaultCompanies,
   achievementsTitle = "Our Achievements",
   achievementsDescription = "We take pride in delivering parcels quickly, safely, and reliably.",
   achievements = defaultAchievements,
@@ -133,22 +104,7 @@ const AboutSection = ({
           </div>
         </div>
 
-        <div className="py-20">
-          <p className="text-center">{companiesTitle}</p>
-          <div className="mt-8 flex flex-wrap justify-center gap-8">
-            {companies.map((company, idx) => (
-              <div className="flex items-center gap-3" key={company.src + idx}>
-                <img
-                  src={company.src}
-                  alt={company.alt}
-                  className="h-6 w-auto md:h-8"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="relative overflow-hidden rounded-xl bg-muted p-10 md:p-16">
+        <div className="mt-10 relative overflow-hidden rounded-xl bg-muted p-10 md:p-16">
           <div className="flex flex-col gap-4 text-center md:text-left">
             <h2 className="text-2xl sm:text-3xl font-semibold">
               {achievementsTitle}
