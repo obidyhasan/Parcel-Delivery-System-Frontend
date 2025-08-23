@@ -40,7 +40,7 @@ npm run dev
    Create a `.env` file and add:
 
 ```env
-VITE_API_BASE_URL=https://parcel-delivery-system-backend.vercel.app
+VITE_API_BASE_URL=https://parcel-delivery-system-backend.vercel.app/api/v1
 ```
 
 ## **Technology Stack**
