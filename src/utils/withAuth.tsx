@@ -16,9 +16,9 @@ export const withAuth = (Component: ComponentType, requiredRole?: TRole) => {
       dispatch(setLoading(isLoading));
     }, [isLoading, dispatch]);
 
-    if (!data?.email) return <Navigate to={"/login"} />;
+    if (!data?.email && !isLoading) return <Navigate to={"/login"} />;
 
-    if (requiredRole && requiredRole !== data?.role) {
+    if (requiredRole && !isLoading && requiredRole !== data?.role) {
       return <Navigate to={"/unauthorized"} />;
     }
 

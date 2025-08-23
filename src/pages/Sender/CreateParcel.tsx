@@ -129,7 +129,7 @@ const CreateParcel = () => {
                 <FormItem>
                   <FormLabel>Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter Parcel Title" {...field} />
+                    <Input placeholder="Rich Dad Poor Dad" {...field} />
                   </FormControl>
                   <FormDescription className="sr-only">
                     This is your Parcel Title.
@@ -147,11 +147,7 @@ const CreateParcel = () => {
                   <FormItem>
                     <FormLabel>Weight</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="Enter Parcel Weight"
-                        {...field}
-                      />
+                      <Input type="number" placeholder="2" {...field} />
                     </FormControl>
                     <FormDescription className="sr-only">
                       This is your public display email.
@@ -168,11 +164,7 @@ const CreateParcel = () => {
                   <FormItem>
                     <FormLabel>Fee</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="Enter Parcel Fee"
-                        {...field}
-                      />
+                      <Input type="number" placeholder="10" {...field} />
                     </FormControl>
                     <FormDescription className="sr-only">
                       This is your Parcel Fee.
@@ -223,7 +215,7 @@ const CreateParcel = () => {
                     <FormControl>
                       <Input
                         type="email"
-                        placeholder="obidyhasan@gmail.com"
+                        placeholder="jondeo@gmail.com"
                         {...field}
                       />
                     </FormControl>
@@ -244,7 +236,7 @@ const CreateParcel = () => {
                   <FormItem>
                     <FormLabel>Pickup Address</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="Enter Pickup Address" {...field} />
+                      <Textarea placeholder="Shibbari, Khulna" {...field} />
                     </FormControl>
                     <FormDescription className="sr-only">
                       This is your pickup address.
@@ -261,10 +253,7 @@ const CreateParcel = () => {
                   <FormItem>
                     <FormLabel>Delivery Address</FormLabel>
                     <FormControl>
-                      <Textarea
-                        placeholder="Enter Delivery Address"
-                        {...field}
-                      />
+                      <Textarea placeholder="Rampal, Bagerhat" {...field} />
                     </FormControl>
                     <FormDescription className="sr-only">
                       This is delivery address.

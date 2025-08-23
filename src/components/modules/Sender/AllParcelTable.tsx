@@ -38,6 +38,7 @@ import { useAppDispatch } from "@/redux/hook";
 import { useEffect, useState } from "react";
 import StatusUpdateAlertDialog from "./StatusUpdateAlertDialog";
 import { toast } from "sonner";
+import { ViewStatusLogsDialog } from "./ViewStatuslogsDialog";
 
 export function AllParcelTable() {
   const { data: parcels = [], isLoading } = useGetParcelRequestQuery(undefined);
@@ -46,6 +47,11 @@ export function AllParcelTable() {
 
   const [openDeleteDialog, setDeleteOpenDialog] = useState(false);
   const [selectedDeleteId, setSelectedDeleteId] = useState<string | null>(null);
+
+  const [openViewStatusDialog, setOpenViewStatusDialog] = useState(false);
+  const [selectedTrackingId, setSelectedTrackingId] = useState<string | null>(
+    null
+  );
 
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
@@ -156,8 +162,19 @@ export function AllParcelTable() {
                 </div>
               </TableCell>
 
-              <TableCell className="text-right">
+              <TableCell className="text-right flex gap-2 justify-end">
                 <Button
+                  onClick={() => {
+                    setSelectedTrackingId(parcel?.trackingId);
+                    setOpenViewStatusDialog(true);
+                  }}
+                  variant={"outline"}
+                  size={"sm"}
+                >
+                  Status Logs
+                </Button>
+                <Button
+                  disabled={parcel?.currentStatus === "Cancelled"}
                   onClick={() => {
                     setSelectedDeleteId(parcel?._id);
                     setDeleteOpenDialog(true);
@@ -202,6 +219,11 @@ export function AllParcelTable() {
         selectedId={selectedId}
         onConfirm={handleStatusUpdate}
         title={"Confirm Status Update"}
+      />
+      <ViewStatusLogsDialog
+        openDialog={openViewStatusDialog}
+        setOpenDialog={setOpenViewStatusDialog}
+        trackingId={selectedTrackingId}
       />
     </>
   );
