@@ -7,6 +7,7 @@ import { adminSidebarItems } from "./adminSidebarItems";
 import { senderSidebarItems } from "./senderSidebarItems";
 import { receiverSidebarItems } from "./receiverSiderbarItems";
 import { lazy } from "react";
+import ParcelDetails from "@/pages/Parcel/ParcelDetails";
 
 const App = lazy(() => import("@/App"));
 const Home = lazy(() => import("@/pages/Home/Home"));
@@ -49,9 +50,13 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to={"/admin/users"} />,
+        element: <Navigate to={"/admin/analytics"} />,
       },
       ...generateRouters(adminSidebarItems),
+      {
+        Component: ParcelDetails,
+        path: "/admin/parcel/:trackingId",
+      },
     ],
   },
   {

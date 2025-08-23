@@ -36,9 +36,10 @@ import { useEffect, useState } from "react";
 import StatusUpdateAlertDialog from "../Sender/StatusUpdateAlertDialog";
 import { toast } from "sonner";
 import ParcelFilters from "@/components/Parcels/ParcelFilters";
-import { useSearchParams } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function AllParcelsTableAdmin() {
   // Filter
@@ -121,7 +122,7 @@ export function AllParcelsTableAdmin() {
               <Input
                 onChange={(e) => setSearchTitle(e.target.value)}
                 className="peer ps-9  max-w-44"
-                placeholder="title, trackingId"
+                placeholder="Title, TrackingId"
                 type="search"
               />
               <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
@@ -144,7 +145,8 @@ export function AllParcelsTableAdmin() {
             <TableHead>Sender</TableHead>
             <TableHead>Receiver</TableHead>
 
-            <TableHead className="text-right">Delivery Status</TableHead>
+            <TableHead>Delivery Status</TableHead>
+            <TableHead className="text-right">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -196,7 +198,7 @@ export function AllParcelsTableAdmin() {
                 </div>
               </TableCell>
 
-              <TableCell className="text-right flex justify-end">
+              <TableCell>
                 <Select
                   defaultValue={parcel?.currentStatus}
                   onValueChange={(value) => {
@@ -221,6 +223,11 @@ export function AllParcelsTableAdmin() {
                     </SelectGroup>
                   </SelectContent>
                 </Select>
+              </TableCell>
+              <TableCell className="text-right flex justify-end">
+                <Button asChild>
+                  <Link to={`/admin/parcel/${parcel?.trackingId}`}>View</Link>
+                </Button>
               </TableCell>
             </TableRow>
           ))}
