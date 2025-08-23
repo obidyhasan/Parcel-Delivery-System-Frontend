@@ -24,8 +24,6 @@ export function ViewStatusLogsDialog({
     dispatch(setLoading(isLoading));
   }, [isLoading, dispatch]);
 
-  console.log(parcel);
-
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <div>

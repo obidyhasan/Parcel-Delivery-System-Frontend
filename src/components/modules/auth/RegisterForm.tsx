@@ -77,10 +77,8 @@ export function RegisterForm({
   const onSubmit = async (data: z.infer<typeof registerSchema>) => {
     const toastId = toast.loading("Please wait...");
     setButtonDisable(true);
-    console.log(data);
     try {
       const res = await register(data).unwrap();
-      console.log(res);
       if (res.success) {
         toast.success("Register successfully", { id: toastId });
         navigate("/login", { replace: true });

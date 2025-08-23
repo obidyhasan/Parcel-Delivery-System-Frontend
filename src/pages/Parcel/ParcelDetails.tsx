@@ -15,8 +15,6 @@ const ParcelDetails = () => {
     dispatch(setLoading(isLoading));
   }, [isLoading, dispatch]);
 
-  console.log(parcel);
-
   return (
     <div>
       <ParcelDeliveryCard parcel={parcel} />
