@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Logo from "@/assets/icons/Logo";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,10 +17,8 @@ import { ModeToggle } from "../ui/mode-toggle";
 import UserMenu from "../ui/user-menu";
 import { useGetMeQuery } from "@/redux/features/User/user.api";
 import { useAppDispatch } from "@/redux/hook";
-import { useEffect } from "react";
 import { setLoading } from "@/redux/features/loadingSlice";
 
-// Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
   { href: "/", label: "Home", role: "PUBLIC", active: true },
   { href: "/about", label: "About", role: "PUBLIC" },
@@ -30,6 +29,8 @@ const navigationLinks = [
 export default function Navbar() {
   const { data: user = {}, isLoading } = useGetMeQuery(undefined);
   const dispatch = useAppDispatch();
+  const [open, setOpen] = useState(false);
+
   useEffect(() => {
     dispatch(setLoading(isLoading));
   }, [isLoading, dispatch]);
@@ -39,8 +40,7 @@ export default function Navbar() {
       <div className="flex h-16 items-center justify-between gap-4 max-w-7xl mx-auto px-4">
         {/* Left side */}
         <div className="flex items-center gap-2">
-          {/* Mobile menu trigger */}
-          <Popover>
+          <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
                 className="group size-8 md:hidden"
@@ -84,6 +84,7 @@ export default function Navbar() {
                         active={link.active}
                         href={link.href}
                         className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                        onClick={() => setOpen(false)}
                       >
                         <Link to={link.href}>{link.label}</Link>
                       </NavigationMenuLink>
@@ -93,7 +94,8 @@ export default function Navbar() {
               </NavigationMenu>
             </PopoverContent>
           </Popover>
-          {/* Main nav */}
+
+          {/* Logo & desktop nav */}
           <div className="flex items-center gap-6">
             <Link to="/" className="">
               <div className="flex gap-2 items-center">
@@ -104,7 +106,8 @@ export default function Navbar() {
                 </h1>
               </div>
             </Link>
-            {/* Navigation menu */}
+
+            {/* Desktop Navigation */}
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-2">
                 {navigationLinks.map((link, index) => (
@@ -123,6 +126,7 @@ export default function Navbar() {
             </NavigationMenu>
           </div>
         </div>
+
         {/* Right side */}
         <div className="flex items-center gap-2">
           <ModeToggle />
