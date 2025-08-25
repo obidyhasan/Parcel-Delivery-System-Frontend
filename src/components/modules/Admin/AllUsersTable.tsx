@@ -87,7 +87,7 @@ export function AllUsersTable() {
   return (
     <>
       <div className="flex items-center justify-between gap-2 my-2 pb-5">
-        <h1 className="text-lg font-bold mb-4">Parcels</h1>
+        <h1 className="text-lg font-bold mb-4">Users</h1>
         <UsersFilters />
       </div>
       <Table>
